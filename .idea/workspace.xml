@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="587f9e3e-f1cd-4ec4-a7a6-6ef6f5da1f67" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/hooks.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/hooks.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/GenerateAiImageDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/GenerateAiImageDialog.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +107,7 @@
       <workItem from="1707728210393" duration="26728000" />
       <workItem from="1707824935864" duration="13808000" />
       <workItem from="1707838788675" duration="272000" />
-      <workItem from="1707839377329" duration="65000" />
+      <workItem from="1707839377329" duration="1642000" />
     </task>
     <servers />
   </component>

@@ -99,7 +99,7 @@ export default function GenerateAiImageDialog() {
         </Button>
       </DialogTrigger>
       <DialogContent className="border-none bg-transparent shadow-none sm:max-w-lg [&>button]:hidden">
-        <DialogHeader className="text-xs text-background">
+        <DialogHeader className="text-xs text-white">
           Note: This feature is experimental and uses the free version of the
           public API. Therefore, the generation time and result may be
           unexpected.
