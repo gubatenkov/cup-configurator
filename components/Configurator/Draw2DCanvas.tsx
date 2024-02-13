@@ -25,7 +25,7 @@ import { CanvasTexture, Texture } from 'three'
 import { useFabricCanvas } from '@/lib/hooks'
 import { Image } from 'fabric/fabric-impl'
 
-import IntrinsicAttributes = React.JSX.IntrinsicAttributes
+import IntrinsicAttributes = JSX.IntrinsicAttributes
 
 type Props = {
   textureRef: MutableRefObject<undefined | Texture>
