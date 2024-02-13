@@ -4,14 +4,14 @@ import ImageButton from '@/components/ImageButton'
 import { useFabricCanvas } from '@/lib/hooks'
 import { fabric } from 'fabric'
 
-export default function PasteImageButton({
+export default function SetImageButton({
   imageUrl,
   index,
 }: {
   imageUrl: string
   index: number
 }) {
-  const { fabricCanvas, isMounted } = useFabricCanvas('.canvas-wrapper')
+  const { fabricCanvas, isMounted } = useFabricCanvas()
 
   const handleClick = () => {
     isMounted &&

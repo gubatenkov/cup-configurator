@@ -1,50 +1,46 @@
 'use client'
 
-import {
-  SyntheticEvent,
-  ChangeEvent,
-  ElementRef,
-  useEffect,
-  useState,
-  useRef,
-} from 'react'
+import { type ElementRef, useEffect, useRef } from 'react'
 import { useFabricCanvas } from '@/lib/hooks'
 import { PaperclipIcon } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { fabric } from 'fabric'
 
-export default function LoadImageButton() {
-  const { isMounted: isCanvasMounted, fabricCanvas } =
-    useFabricCanvas('.canvas-wrapper')
+export default function UploadImageButton() {
+  const { isMounted: isCanvasMounted, fabricCanvas } = useFabricCanvas()
   const inputRef = useRef<ElementRef<'input'>>(null)
 
+  // Listen to the input for the image load event, and then display it on the canvas
   useEffect(() => {
     const inputElement = inputRef.current
     if (!inputElement) return
 
+    // Init listener
     isCanvasMounted &&
-      inputElement.addEventListener('change', handleChangeInput)
+      inputElement.addEventListener('change', handleUploadedImage)
 
-    function handleChangeInput(e: Event) {
+    // Handle image upload
+    function handleUploadedImage(e: Event) {
       const eventTarget = e.target as HTMLInputElement
       const fileList = eventTarget.files
       if (!fileList || fileList.length === 0) return
       const reader = new FileReader()
       const loadedImageFile = fileList[0]
 
-      reader.onload = function (f) {
-        const data = f.target!.result
-        fabric.Image.fromURL(data as string, function (img) {
+      reader.onload = (e) => {
+        const data = e.target!.result
+        fabric.Image.fromURL(data as string, (img) => {
           const scaleTo =
             fabricCanvas.width && img.width && fabricCanvas.width / img.width
-          const imageObject = img.scale(scaleTo ?? 0.5)
+          const imageObject = img.scale(scaleTo || 0.5)
           fabricCanvas.centerObject(imageObject).add(imageObject).renderAll()
         })
       }
       reader.readAsDataURL(loadedImageFile)
     }
 
-    return () => inputElement.removeEventListener('change', handleChangeInput)
+    // Default cleanup
+    return () => inputElement.removeEventListener('change', handleUploadedImage)
   }, [fabricCanvas, isCanvasMounted])
 
   return (
@@ -54,7 +50,7 @@ export default function LoadImageButton() {
         ref={inputRef}
         type="file"
       />
-      <PaperclipIcon size={32} />
+      <PaperclipIcon className="h-6 w-6 2xl:h-8 2xl:w-8" />
     </Card>
   )
 }

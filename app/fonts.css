@@ -1,0 +1,92 @@
+@font-face {
+  font-weight: 400;
+  font-display: swap;
+  font-family: 'Lato';
+  src: url('/assets/fonts/lato/LatoRegular.eot');
+  src:
+    url('/assets/fonts/lato/LatoRegular.eot') format('embedded-opentype'),
+    url('/assets/fonts/lato/LatoRegular.woff2') format('woff2'),
+    url('/assets/fonts/lato/LatoRegular.woff') format('woff'),
+    url('/assets/fonts/lato/LatoRegular.ttf') format('truetype'),
+    url('/assets/fonts/lato/LatoRegular.svg#LatoRegular') format('svg');
+}
+
+@font-face {
+  font-weight: 700;
+  font-display: swap;
+  font-family: 'Lato';
+  src: url('/assets/fonts/lato/LatoBold.eot');
+  src:
+    url('/assets/fonts/lato/LatoBold.eot') format('embedded-opentype'),
+    url('/assets/fonts/lato/LatoBold.woff2') format('woff2'),
+    url('/assets/fonts/lato/LatoBold.woff') format('woff'),
+    url('/assets/fonts/lato/LatoBold.ttf') format('truetype'),
+    url('/assets/fonts/lato/LatoBold.svg#LatoBold') format('svg');
+}
+
+@font-face {
+  font-weight: 400;
+  font-display: swap;
+  font-family: 'Caveat';
+  src: url('/assets/fonts/caveat/CaveatVariableFont_wght.eot');
+  src:
+    url('/assets/fonts/caveat/CaveatVariableFont_wght.eot')
+      format('embedded-opentype'),
+    url('/assets/fonts/caveat/CaveatVariableFont_wght.woff2') format('woff2'),
+    url('/assets/fonts/caveat/CaveatVariableFont_wght.woff') format('woff'),
+    url('/assets/fonts/caveat/CaveatVariableFont_wght.ttf') format('truetype'),
+    url('/assets/fonts/caveat/CaveatVariableFont_wght.svg#CaveatVariableFont_wght')
+      format('svg');
+}
+
+@font-face {
+  font-weight: 400;
+  font-display: swap;
+  font-family: 'Merienda';
+  src: url('/assets/fonts/merienda/MeriendaVariableFont_wght.eot');
+  src:
+    url('/assets/fonts/merienda/MeriendaVariableFont_wght.eot')
+      format('embedded-opentype'),
+    url('/assets/fonts/merienda/MeriendaVariableFont_wght.woff2')
+      format('woff2'),
+    url('/assets/fonts/merienda/MeriendaVariableFont_wght.woff') format('woff'),
+    url('/assets/fonts/merienda/MeriendaVariableFont_wght.ttf')
+      format('truetype'),
+    url('/assets/fonts/merienda/MeriendaVariableFont_wght.svg#MeriendaVariableFont_wght')
+      format('svg');
+}
+
+@font-face {
+  font-weight: 400;
+  font-display: swap;
+  font-family: 'Lemonada';
+  src: url('/assets/fonts/lemonada/LemonadaVariableFont_wght.eot');
+  src:
+    url('/assets/fonts/lemonada/LemonadaVariableFont_wght.eot')
+      format('embedded-opentype'),
+    url('/assets/fonts/lemonada/LemonadaVariableFont_wght.woff2')
+      format('woff2'),
+    url('/assets/fonts/lemonada/LemonadaVariableFont_wght.woff') format('woff'),
+    url('/assets/fonts/lemonada/LemonadaVariableFont_wght.ttf')
+      format('truetype'),
+    url('/assets/fonts/lemonada/LemonadaVariableFont_wght.svg#LemonadaVariableFont_wght')
+      format('svg');
+}
+
+@font-face {
+  font-weight: 400;
+  font-display: swap;
+  font-family: 'Dancing Script';
+  src: url('/assets/fonts/dancing-script/DancingScriptVariableFont_wght.eot');
+  src:
+    url('/assets/fonts/dancing-script/DancingScriptVariableFont_wght.eot')
+      format('embedded-opentype'),
+    url('/assets/fonts/dancing-script/DancingScriptVariableFont_wght.woff2')
+      format('woff2'),
+    url('/assets/fonts/dancing-script/DancingScriptVariableFont_wght.woff')
+      format('woff'),
+    url('/assets/fonts/dancing-script/DancingScriptVariableFont_wght.ttf')
+      format('truetype'),
+    url('/assets/fonts/dancing-script/DancingScriptVariableFont_wght.svg#DancingScriptVariableFont_wght')
+      format('svg');
+}

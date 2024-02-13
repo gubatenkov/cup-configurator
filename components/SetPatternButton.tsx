@@ -1,30 +1,31 @@
 'use client'
 
+import { Pattern, Image } from 'fabric/fabric-impl'
 import ImageButton from '@/components/ImageButton'
 import { useFabricCanvas } from '@/lib/hooks'
-import { fabric } from 'fabric'
 
-export default function SetBackgroundButton({
+export default function SetPatternButton({
   imageUrl,
   index,
 }: {
   imageUrl: string
   index: number
 }) {
-  const { fabricCanvas, isMounted } = useFabricCanvas('.canvas-wrapper')
+  const { fabricCanvas, isMounted } = useFabricCanvas()
 
   const handleClick = () => {
-    isMounted &&
-      fabric.Image.fromURL(imageUrl, (image) => {
-        fabricCanvas.setBackgroundImage(
-          image,
-          fabricCanvas.renderAll.bind(fabricCanvas),
-          {
-            scaleY: (fabricCanvas.height ?? 1) / (image.height ?? 1),
-            scaleX: (fabricCanvas.width ?? 1) / (image.width ?? 1),
-          }
-        )
-      })
+    if (!isMounted) return
+
+    // Clear canvas background
+    fabricCanvas.setBackgroundImage(
+      null as unknown as Image,
+      fabricCanvas.renderAll.bind(fabricCanvas)
+    )
+    // Add new canvas background
+    fabricCanvas.setBackgroundColor(
+      { source: imageUrl, repeat: 'repeat' } as Pattern,
+      fabricCanvas.renderAll.bind(fabricCanvas)
+    )
   }
 
   return <ImageButton onClick={handleClick} imageUrl={imageUrl} index={index} />

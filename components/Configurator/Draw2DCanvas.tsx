@@ -4,29 +4,26 @@ import type {
   ForwardRefExoticComponent,
   MutableRefObject,
   RefAttributes,
-  ReactNode,
 } from 'react'
 
 import {
   ArrowDownFromLineIcon,
   ChevronRightCircle,
+  FileDownIcon,
   XSquareIcon,
   LucideProps,
   LucideIcon,
   XIcon,
 } from 'lucide-react'
-import {
-  TooltipContent,
-  TooltipTrigger,
-  Tooltip,
-} from '@/components/ui/tooltip'
 import { ButtonProps, Button } from '@/components/ui/button'
+import { downloadCanvasAsImage, cn } from '@/lib/utils'
+import { baseCanvasBackgroundColor } from '@/lib/data'
 import { useEffect, useState, useMemo } from 'react'
 import WithTooltip from '@/components/WithTooltip'
 import { useCanvasBackground } from '@/lib/hooks'
 import { CanvasTexture, Texture } from 'three'
 import { useFabricCanvas } from '@/lib/hooks'
-import { cn } from '@/lib/utils'
+import { Image } from 'fabric/fabric-impl'
 
 import IntrinsicAttributes = React.JSX.IntrinsicAttributes
 
@@ -35,8 +32,9 @@ type Props = {
 }
 
 export default function Draw2DCanvas({ textureRef }: Props) {
-  const { fabricCanvas, isMounted } = useFabricCanvas('.canvas-wrapper')
-  useCanvasBackground('/assets/backgrounds/defaultBg.jpg')
+  const { fabricCanvas, isMounted } = useFabricCanvas()
+  // Load on canvas default image configuration
+  useCanvasBackground('/assets/backgrounds/default-cup-configuration.png')
 
   useEffect(() => {
     if (!isMounted) return
@@ -75,7 +73,7 @@ type TCanvasAction = {
 }
 
 const CanvasActions = () => {
-  const { fabricCanvas, isMounted } = useFabricCanvas('.canvas-wrapper')
+  const { fabricCanvas, isMounted } = useFabricCanvas()
   const [isActionsVisible, setIsActionsVisible] = useState(false)
   const actions: TCanvasAction[] = useMemo(
     () =>
@@ -86,18 +84,17 @@ const CanvasActions = () => {
               onClick: () => {
                 if (!isMounted) return
                 // Remove all objects from fabric canvas
-                fabricCanvas.remove(...fabricCanvas.getObjects())
-                // Clear canvas background
-                fabricCanvas.setBackgroundImage(
-                  // @ts-expect-error
-                  null,
-                  fabricCanvas.renderAll.bind(fabricCanvas)
-                )
+                fabricCanvas
+                  .remove(...fabricCanvas.getObjects())
+                  // Clear canvas background
+                  .setBackgroundImage(
+                    null as unknown as Image,
+                    fabricCanvas.renderAll.bind(fabricCanvas)
+                  )
+                  // Patterns are set as the background color, so don't forget to clear them too
+                  .setBackgroundColor(baseCanvasBackgroundColor, () => {})
+                  .renderAll()
               },
-              className: cn(
-                'h-10 w-10 rounded-full p-0 border border-background/50',
-                'transition-all duration-150 linear'
-              ),
             },
             element: Button,
           },
@@ -116,16 +113,18 @@ const CanvasActions = () => {
               onClick: () => {
                 if (!isMounted) return
                 // Clear canvas background
-                fabricCanvas.setBackgroundImage(
-                  // @ts-expect-error
-                  null,
-                  fabricCanvas.renderAll.bind(fabricCanvas)
-                )
+                fabricCanvas
+                  .setBackgroundImage(
+                    null as unknown as Image,
+                    fabricCanvas.renderAll.bind(fabricCanvas)
+                  )
+                  .setBackgroundColor(
+                    // The patterns are the background, so clean it up as well.
+                    baseCanvasBackgroundColor,
+                    () => {}
+                  )
+                  .renderAll()
               },
-              className: cn(
-                'h-10 w-10 rounded-full p-0 border border-background/50',
-                'transition-all duration-150 linear'
-              ),
             },
             element: Button,
           },
@@ -147,10 +146,6 @@ const CanvasActions = () => {
                 if (!activeObject) return
                 fabricCanvas.sendToBack(activeObject).discardActiveObject()
               },
-              className: cn(
-                'h-10 w-10 rounded-full p-0 border border-background/50',
-                'transition-all duration-150 linear'
-              ),
             },
             element: Button,
           },
@@ -172,10 +167,6 @@ const CanvasActions = () => {
                 if (!activeObject) return
                 fabricCanvas.bringToFront(activeObject).discardActiveObject()
               },
-              className: cn(
-                'h-10 w-10 rounded-full p-0 border border-background/50',
-                'transition-all duration-150 linear'
-              ),
             },
             element: Button,
           },
@@ -187,6 +178,24 @@ const CanvasActions = () => {
             element: ArrowDownFromLineIcon,
           },
           name: 'Bring selection to front',
+        },
+        {
+          component: {
+            props: {
+              onClick: () => {
+                downloadCanvasAsImage(fabricCanvas.lowerCanvasEl)
+              },
+            },
+            element: Button,
+          },
+          icon: {
+            props: {
+              className: '',
+              size: 16,
+            },
+            element: FileDownIcon,
+          },
+          name: 'Save canvas as image',
         },
       ] satisfies TCanvasAction[],
     [fabricCanvas, isMounted]
@@ -233,6 +242,11 @@ const CanvasActions = () => {
                   : `translateX(calc(-${(index + 1) * 100}% - 0.5rem))`,
                 opacity: isActionsVisible ? 0.65 : 0,
               }}
+              className={cn(
+                'h-10 w-10 rounded-full border border-background/50 p-0',
+                'linear transition-all duration-150',
+                componentProps.className
+              )}
             >
               <Icon {...props} />
             </Element>

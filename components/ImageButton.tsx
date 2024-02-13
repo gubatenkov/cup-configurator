@@ -1,29 +1,25 @@
 'use client'
 
+import type { MouseEventHandler } from 'react'
+
 import { buttonVariants } from '@/components/ui/button'
-import { useFabricCanvas } from '@/lib/hooks'
 import { cn } from '@/lib/utils'
-import { fabric } from 'fabric'
 import Image from 'next/image'
 
-export default function ImageButton({ index }: { index: number }) {
-  const { fabricCanvas, isMounted } = useFabricCanvas('.canvas-wrapper')
-  const imageUrl = `/assets/images/image${index + 1}.png`
-
-  const handleClick = () => {
-    isMounted &&
-      fabric.Image.fromURL(imageUrl, (image) => {
-        image.scale(0.5)
-        fabricCanvas.centerObject(image)
-        fabricCanvas.add(image)
-      })
-  }
-
+export default function ImageButton({
+  onClick: handleClick,
+  imageUrl,
+  index,
+}: {
+  onClick: MouseEventHandler<HTMLButtonElement>
+  imageUrl: string
+  index: number
+}) {
   return (
     <button
       className={cn(
         buttonVariants({ variant: 'default' }),
-        'relative h-full w-full overflow-hidden'
+        'relative h-full w-full overflow-hidden bg-background'
       )}
       onClick={handleClick}
       key={index}
