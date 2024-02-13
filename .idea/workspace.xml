@@ -6,19 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="587f9e3e-f1cd-4ec4-a7a6-6ef6f5da1f67" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Configurator/Draw2DCanvas.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Configurator/Draw2DCanvas.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/card.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/dialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/dialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/dropdown-menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/dropdown-menu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/input.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/select.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/select.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/separator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/separator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/slider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/slider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/toggle-group.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/toggle-group.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/toggle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/toggle.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ui/tooltip.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/tooltip.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +105,7 @@
       <workItem from="1707659101703" duration="162000" />
       <workItem from="1707667747080" duration="3595000" />
       <workItem from="1707728210393" duration="26728000" />
-      <workItem from="1707824935864" duration="9688000" />
+      <workItem from="1707824935864" duration="9970000" />
     </task>
     <servers />
   </component>
