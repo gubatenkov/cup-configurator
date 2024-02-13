@@ -91,11 +91,11 @@ export function useCanvasBackground<TUrl extends `${string}.${'png' | 'jpg'}`>(
       fabric.Image.fromURL(imageUrl as string, (image) => {
         fabricCanvas.setBackgroundImage(
           image,
-          fabricCanvas.renderAll.bind(fabricCanvas)
-          // {
-          //   scaleY: ((fabricCanvas.height ?? 1) / (image.height ?? 1)) * 1.25,
-          //   scaleX: (fabricCanvas.width ?? 1) / (image.width ?? 1),
-          // }
+          fabricCanvas.renderAll.bind(fabricCanvas),
+          {
+            scaleY: (fabricCanvas.height ?? 1) / (image.height ?? 1),
+            scaleX: (fabricCanvas.width ?? 1) / (image.width ?? 1),
+          }
         )
       })
   }, [fabricCanvas, isMounted, imageUrl])
