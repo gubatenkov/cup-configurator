@@ -32,7 +32,7 @@ const initialConfig: RequestInit = {
 }
 
 export default function GenerateAiImageDialog() {
-  const { fabricCanvas, isMounted } = useFabricCanvas()
+  const { fabricCanvas } = useFabricCanvas()
   const [prompt, setPrompt] = useState<string>('')
   const [isGenerating, setIsGenerating] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -60,11 +60,16 @@ export default function GenerateAiImageDialog() {
 
         if (data.replicate.status === 'success') {
           const imageUrl = data.replicate.items[0].image_resource_url
-          if (!isMounted) return
           // Paste generated image on canvas
-          fabric.Image.fromURL(imageUrl, (image) => {
-            fabricCanvas.add(image).centerObject(image).renderAll()
-          })
+          fabric.Image.fromURL(
+            imageUrl,
+            (image) => {
+              fabricCanvas && fabricCanvas.centerObject(image).add(image)
+            },
+            {
+              crossOrigin: 'anonymous',
+            }
+          )
         }
       } catch (e) {
         setError(true)
@@ -81,7 +86,7 @@ export default function GenerateAiImageDialog() {
     return () => {
       controller.abort()
     }
-  }, [fabricCanvas, isGenerating, isMounted, prompt])
+  }, [fabricCanvas, isGenerating, prompt])
 
   return (
     <Dialog onOpenChange={setIsDialogOpen} open={isDialogOpen}>
