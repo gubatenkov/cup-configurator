@@ -8,7 +8,7 @@ import {
   Group,
   Mesh,
 } from 'three'
-import { useTexture, Sparkles, useGLTF, Shadow } from '@react-three/drei'
+import { useTexture, useGLTF, Shadow } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 
@@ -51,7 +51,7 @@ export default function Cup({ textureRef }: Props) {
     cupDrawAreaRef.current.material.map = textureRef.current
     cupDrawAreaRef.current.material.map.needsUpdate = true
 
-    // Scale cup animation
+    // Scale cup on mount animation
     if (groupRef.current.scale.x < 1) {
       groupRef.current.scale.x += 0.01
       groupRef.current.scale.y += 0.01

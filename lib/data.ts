@@ -37,7 +37,7 @@ export const fillColors = [
   '#e84b3c',
 ] as const
 
-export const homePageCards = [
+export const panelItems = [
   {
     label: 'Text',
     path: 'text',

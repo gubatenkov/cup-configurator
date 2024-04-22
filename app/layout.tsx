@@ -13,7 +13,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Cup Configurator',
+  title: '3D Cup Configurator',
   description: '',
 }
 
@@ -38,7 +38,8 @@ export default function RootLayout({
       <body className={cn(inter.className, 'antialiased')}>
         <Providers>
           <Header />
-          <main className="main mx-auto grid h-[calc(100%-var(--nav-height))] w-full grid-cols-2 gap-4 p-4">
+          {/* Hide configurator on all devices up to breakpoint :lg */}
+          <main className="main mx-auto hidden h-[calc(100%-var(--nav-height))] w-full grid-cols-2 gap-4 p-4 lg:grid">
             <Configurator>{children}</Configurator>
           </main>
         </Providers>

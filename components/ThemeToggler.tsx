@@ -15,7 +15,7 @@ export default function ThemeToggler() {
   const [isMounted, setMounted] = useState(false)
   const { setTheme } = useTheme()
 
-  // useEffect only runs on the client, so now we can safely show the UI
+  // As we know, hooks only work on the client, so now we can safely show the UI
   useEffect(() => {
     setMounted(true)
   }, [])

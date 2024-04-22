@@ -19,8 +19,8 @@ import { ButtonProps, Button } from '@/components/ui/button'
 import { downloadCanvasAsImage, cn } from '@/lib/utils'
 import { baseCanvasBackgroundColor } from '@/lib/data'
 import { useEffect, useState, useMemo } from 'react'
+import { use2DCanvasBackground } from '@/lib/hooks'
 import WithTooltip from '@/components/WithTooltip'
-import { useCanvasBackground } from '@/lib/hooks'
 import { CanvasTexture, Texture } from 'three'
 import { useFabricCanvas } from '@/lib/hooks'
 import { Image } from 'fabric/fabric-impl'
@@ -34,14 +34,14 @@ type Props = {
 export default function Draw2DCanvas({ textureRef }: Props) {
   const { fabricCanvas, isMounted } = useFabricCanvas()
   // Load on canvas default image configuration
-  useCanvasBackground('/assets/backgrounds/default-cup-configuration.png')
+  use2DCanvasBackground('/assets/backgrounds/default-cup-configuration.png')
 
   useEffect(() => {
-    if (!isMounted) return
+    if (!fabricCanvas) return
     // Create texture from canvas and assign it to the parent ref
     textureRef.current = new CanvasTexture(fabricCanvas.lowerCanvasEl)
     // eslint-disable-next-line
-  }, [fabricCanvas, isMounted])
+  }, [fabricCanvas])
 
   return (
     <>
@@ -82,7 +82,7 @@ const CanvasActions = () => {
           component: {
             props: {
               onClick: () => {
-                if (!isMounted) return
+                if (!fabricCanvas) return
                 // Remove all objects from fabric canvas
                 fabricCanvas
                   .remove(...fabricCanvas.getObjects())
@@ -111,7 +111,7 @@ const CanvasActions = () => {
           component: {
             props: {
               onClick: () => {
-                if (!isMounted) return
+                if (!fabricCanvas) return
                 // Clear canvas background
                 fabricCanvas
                   .setBackgroundImage(
@@ -141,7 +141,7 @@ const CanvasActions = () => {
           component: {
             props: {
               onClick: () => {
-                if (!isMounted) return
+                if (!fabricCanvas) return
                 const activeObject = fabricCanvas.getActiveObject()
                 if (!activeObject) return
                 fabricCanvas.sendToBack(activeObject).discardActiveObject()
@@ -162,7 +162,7 @@ const CanvasActions = () => {
           component: {
             props: {
               onClick: () => {
-                if (!isMounted) return
+                if (!fabricCanvas) return
                 const activeObject = fabricCanvas.getActiveObject()
                 if (!activeObject) return
                 fabricCanvas.bringToFront(activeObject).discardActiveObject()
@@ -183,6 +183,7 @@ const CanvasActions = () => {
           component: {
             props: {
               onClick: () => {
+                if (!fabricCanvas) return
                 downloadCanvasAsImage(fabricCanvas.lowerCanvasEl)
               },
             },
@@ -198,7 +199,7 @@ const CanvasActions = () => {
           name: 'Save canvas as image',
         },
       ] satisfies TCanvasAction[],
-    [fabricCanvas, isMounted]
+    [fabricCanvas]
   )
 
   const handleToggleActions = () => {

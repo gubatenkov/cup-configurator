@@ -1,5 +1,7 @@
 'use client'
 
+// import type { ChangeEvent } from 'react'
+
 import {
   SelectContent,
   SelectTrigger,
@@ -8,18 +10,18 @@ import {
   SelectItem,
   Select,
 } from '@/components/ui/select'
-import { type ChangeEvent, useEffect, useState } from 'react'
 import ToggleStyleGroup from '@/components/ToggleStyleGroup'
 import ToggleAlignGroup from '@/components/ToggleAlignGroup'
 import { Separator } from '@/components/ui/separator'
 import { fillColors, fontColors } from '@/lib/data'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
-import { useFabricCanvas } from '@/lib/hooks'
+// import { useFabricCanvas } from '@/lib/hooks'
 import { Input } from '@/components/ui/input'
+import { useEffect, useState } from 'react'
 import { CheckIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { fabric } from 'fabric'
+// import { fabric } from 'fabric'
 
 const defaultTextOptions = {
   fontStyle: 'normal' as 'oblique' | 'normal' | 'italic' | '',
@@ -40,7 +42,7 @@ const defaultTextOptions = {
 type TextOptions = typeof defaultTextOptions
 
 export default function TextOptions() {
-  const { isMounted: canvasIsMounted, fabricCanvas } = useFabricCanvas()
+  // const { isMounted: canvasIsMounted, fabricCanvas } = useFabricCanvas()
   const [textOptions, setTextOptions] =
     useState<TextOptions>(defaultTextOptions)
   const [colorInputs, setColorInputs] = useState({
@@ -48,159 +50,13 @@ export default function TextOptions() {
     fill: '',
   })
 
-  useEffect(() => {
-    if (!canvasIsMounted) return
-
-    // Unlock all canvas textboxes when user enters text editor
-    const textboxes = fabricCanvas.getObjects('textbox') as fabric.Textbox[]
-    textboxes.forEach((tb) => tb.set({ selectable: true, editable: true }))
-
-    // Lock when leaves
-    return () => {
-      const textboxes = fabricCanvas.getObjects('textbox') as fabric.Textbox[]
-      textboxes.forEach((tb) => {
-        tb.exitEditing()
-        tb.set({
-          ...tb,
-          selectable: false,
-          editable: false,
-          selected: false,
-        })
-      })
-      fabricCanvas.discardActiveObject().renderAll()
-    }
-  }, [canvasIsMounted, fabricCanvas])
-
-  // Watch changes of textOptions and render them on canvas
-  useEffect(() => {
-    if (!canvasIsMounted) return
-
-    const handleUpdateActiveTextbox = () => {
-      // Get selected canvas object
-      const activeObj = fabricCanvas.getActiveObject()
-      // Check if this is fabric Text
-      if (activeObj instanceof fabric.IText) {
-        // Apply updates to text
-        activeObj.set({ ...textOptions, text: activeObj.text })
-        // Render updates on fabric canvas
-        fabricCanvas.renderAll()
-      }
-    }
-
-    handleUpdateActiveTextbox()
-  }, [canvasIsMounted, fabricCanvas, textOptions])
-
-  // Listen to canvas events
-  useEffect(() => {
-    if (!canvasIsMounted) return
-
-    fabricCanvas
-      .on('selection:created', handleSelection)
-      .on('selection:updated', handleSelection)
-  }, [fabricCanvas, canvasIsMounted])
-
-  const handleSelection = (e: fabric.IEvent<MouseEvent>) => {
-    // When no active objects on canvas
-    if (!e.selected?.length) return
-    const selection = e.selected[0]
-
-    // Continue if selection is fabric.Textbox
-    if (selection instanceof fabric.Textbox) {
-      const {
-        backgroundColor,
-        fontWeight,
-        fontFamily,
-        lineHeight,
-        textAlign,
-        underline,
-        fontStyle,
-        fontSize,
-        text,
-        fill,
-      } = selection
-
-      setTextOptions({
-        backgroundColor,
-        fontWeight,
-        fontFamily,
-        lineHeight,
-        textAlign,
-        underline,
-        fontStyle,
-        fontSize,
-        text,
-        fill,
-        /** Tell the compiler that we're being type safe here because
-         *  we defined all these default props at the very beginning  **/
-      } as TextOptions)
-    }
-  }
-
-  const handleAddText = () => {
-    if (!canvasIsMounted) return
-    const textbox = new fabric.Textbox(textOptions.text, textOptions)
-    // Apply some adjustments
-    fabricCanvas.centerObject(textbox).setActiveObject(textbox).add(textbox)
-    // Set focus on created textbox
-    textbox.setSelectionEnd(textOptions.text.length)
-    textbox.enterEditing()
-  }
-
-  const handleRemoveText = () => {
-    if (!canvasIsMounted) return
-    const activeObject = fabricCanvas.getActiveObject()
-    if (activeObject instanceof fabric.Textbox) {
-      fabricCanvas.remove(activeObject)
-    }
-  }
-
-  const updateFontColor = (color: string) => {
-    setTextOptions((prevOpt) => ({ ...prevOpt, fill: color }))
-  }
-
-  const updateBackgroundColor = (color: string) => {
-    setTextOptions((prevOpt) => ({ ...prevOpt, backgroundColor: color }))
-  }
-
-  const handleFontSizeChange = (fontSizeValue: [number]) => {
-    setTextOptions((prevOpt) => ({
-      ...prevOpt,
-      fontSize: fontSizeValue[0],
-    }))
-  }
-
-  const handleLineHeightChange = (lineHeightValue: [number]) => {
-    setTextOptions((prevOpt) => ({
-      ...prevOpt,
-      lineHeight: lineHeightValue[0],
-    }))
-  }
-
-  const handleChangeColorInputs = (e: ChangeEvent<HTMLInputElement>) => {
-    setColorInputs((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }))
-  }
-
-  const handleApplyColorClick = (inputName: keyof typeof colorInputs) => {
-    const validHexColorRegexp = /^#[0-9A-F]{6}[0-9a-f]{0,2}$/i
-    // Check if user entered valid hex string
-    if (validHexColorRegexp.test('#AABBCC80')) {
-      setTextOptions((prevOpts) => ({
-        ...prevOpts,
-        [inputName]: colorInputs[inputName],
-      }))
-    }
-  }
-
   return (
     <>
       <div className="space-y-4 pt-8 2xl:space-y-6">
         <div className="group flex items-center gap-4">
           <Button
             className="h-auto w-full px-4 py-2 text-xs 2xl:text-sm"
-            onClick={handleAddText}
+            // onClick={handleAddText}
           >
             Add Text
           </Button>
@@ -210,7 +66,7 @@ export default function TextOptions() {
           />
           <Button
             className="h-auto w-full px-4 py-2 text-xs 2xl:text-sm"
-            onClick={handleRemoveText}
+            // onClick={handleRemoveText}
           >
             Delete Selected
           </Button>
@@ -266,7 +122,7 @@ export default function TextOptions() {
         <div className="group">
           <p className="mb-2 text-sm 2xl:text-base">Font Size</p>
           <Slider
-            onValueChange={handleFontSizeChange}
+            // onValueChange={handleFontSizeChange}
             value={[textOptions.fontSize]}
             max={100}
             step={1}
@@ -277,7 +133,7 @@ export default function TextOptions() {
         <div className="group">
           <p className="mb-2 text-sm 2xl:text-base">Line Height</p>
           <Slider
-            onValueChange={handleLineHeightChange}
+            // onValueChange={handleLineHeightChange}
             value={[textOptions.lineHeight]}
             step={0.1}
             min={0.1}
@@ -335,7 +191,7 @@ export default function TextOptions() {
               {fontColors.map((fontColor, index) => (
                 <li
                   className="relative h-7 w-7 shrink-0 cursor-pointer rounded-full border border-zinc-300 2xl:h-10 2xl:w-10"
-                  onClick={() => updateFontColor(fontColor)}
+                  // onClick={() => updateFontColor(fontColor)}
                   style={{ backgroundColor: fontColor }}
                   key={index}
                 >
@@ -356,14 +212,14 @@ export default function TextOptions() {
               <Input
                 className="h-8 placeholder:text-xs 2xl:h-9 2xl:placeholder:text-sm"
                 placeholder="HEX string e.g. #ffffff"
-                onChange={handleChangeColorInputs}
+                // onChange={handleChangeColorInputs}
                 value={colorInputs.fill}
                 type="string"
                 name="fill"
               />
               <Button
                 className="h-auto px-4 py-2 text-xs 2xl:text-sm"
-                onClick={() => handleApplyColorClick('fill')}
+                // onClick={() => handleApplyColorClick('fill')}
               >
                 Apply
               </Button>
@@ -378,7 +234,7 @@ export default function TextOptions() {
             {fillColors.map((backgroundColor, index) => (
               <li
                 className="relative h-7 w-7 shrink-0 cursor-pointer rounded-full border border-zinc-300 2xl:h-10 2xl:w-10"
-                onClick={() => updateBackgroundColor(backgroundColor)}
+                // onClick={() => updateBackgroundColor(backgroundColor)}
                 style={{ backgroundColor }}
                 key={index}
               >
@@ -402,12 +258,12 @@ export default function TextOptions() {
               className="h-8 placeholder:text-xs 2xl:h-9 2xl:placeholder:text-sm"
               placeholder="HEX string e.g. #ffffff"
               value={colorInputs.backgroundColor}
-              onChange={handleChangeColorInputs}
+              // onChange={handleChangeColorInputs}
               name="backgroundColor"
               type="string"
             />
             <Button
-              onClick={() => handleApplyColorClick('backgroundColor')}
+              // onClick={() => handleApplyColorClick('backgroundColor')}
               className="h-auto px-4 py-2 text-xs 2xl:text-sm"
             >
               Apply

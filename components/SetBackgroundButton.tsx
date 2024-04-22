@@ -11,20 +11,20 @@ export default function SetBackgroundButton({
   imageUrl: string
   index: number
 }) {
-  const { fabricCanvas, isMounted } = useFabricCanvas()
+  const { fabricCanvas } = useFabricCanvas()
 
   const handleClick = () => {
-    isMounted &&
-      fabric.Image.fromURL(imageUrl, (image) => {
-        fabricCanvas.setBackgroundImage(
-          image,
-          fabricCanvas.renderAll.bind(fabricCanvas),
-          {
-            scaleY: (fabricCanvas.height ?? 1) / (image.height ?? 1),
-            scaleX: (fabricCanvas.width ?? 1) / (image.width ?? 1),
-          }
-        )
-      })
+    if (!fabricCanvas) return
+    fabric.Image.fromURL(imageUrl, (image) => {
+      fabricCanvas.setBackgroundImage(
+        image,
+        fabricCanvas.renderAll.bind(fabricCanvas),
+        {
+          scaleY: (fabricCanvas.height ?? 1) / (image.height ?? 1),
+          scaleX: (fabricCanvas.width ?? 1) / (image.width ?? 1),
+        }
+      )
+    })
   }
 
   return <ImageButton onClick={handleClick} imageUrl={imageUrl} index={index} />

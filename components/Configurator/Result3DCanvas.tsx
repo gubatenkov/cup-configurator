@@ -13,6 +13,7 @@ export default function Result3DCanvas({ children }: { children: ReactNode }) {
 
   return (
     <>
+      {/* Actions with tooltips*/}
       <WithTooltip tip="Toggle model rotation">
         <Button
           className="absolute bottom-4 right-4 z-50 h-10 w-10 !rounded-full !p-0 opacity-60"
@@ -25,7 +26,7 @@ export default function Result3DCanvas({ children }: { children: ReactNode }) {
           )}
         </Button>
       </WithTooltip>
-
+      {/* Canvas element */}
       <Canvas
         camera={{
           position: [0, 2, 5],

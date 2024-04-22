@@ -9,7 +9,7 @@ type FabricCanvas = fabric.Canvas & {
   wrapperEl: HTMLDivElement
 }
 
-let fabricCanvas: FabricCanvas
+let fabricCanvas: FabricCanvas | undefined
 
 export const useFabricCanvas = () => {
   const [isMounted, setIsMounted] = useState(Boolean(fabricCanvas))
@@ -31,10 +31,13 @@ export const useFabricCanvas = () => {
     }
 
     const initCanvas = () => {
-      if (!wrapperRef?.current) {
-        throw new Error(
-          "Can't find container node. Please, provide valid container selector!"
-        )
+      if (!wrapperRef.current) {
+        // There is no need to throw an error in the starter, so we just exit the function
+        setIsMounted(false)
+        return
+        // throw new Error(
+        //   "Can't find container node. Please, provide valid container selector!"
+        // )
       }
 
       // Calculate initial size of canvas wrapper
@@ -52,51 +55,38 @@ export const useFabricCanvas = () => {
 
       // Append canvas node to the provided wrapper element
       wrapperRef.current.appendChild(fabricCanvas.wrapperEl)
+
+      // Trigger update
+      setIsMounted(true)
     }
 
     // Make sure there is always only one instance
     if (!fabricCanvas) initCanvas()
 
-    // Trigger update
-    setIsMounted(true)
-
     // TO-DO: implement resizing logic for canvas
-    // function handleCanvasResize() {
-    // wrapperBoundaries.recalculate()
-    // fabricRef.current?.setDimensions({
-    //   height: wrapperBoundaries.height - 1,
-    //   width: wrapperBoundaries.width - 1,
-    // })
-    // textureRef.current!.needsUpdate = true
-    // }
-
-    // return () => {
-    //   // Clear canvas and listeners
-    //   fabricRef.current?.dispose()
-    //   window.removeEventListener('resize', handleCanvasResize)
-    // }
+    // const handleCanvasResize = () => {}
   }, [containerClass])
 
   return { fabricCanvas, isMounted }
 }
 
-export function useCanvasBackground<TUrl extends `${string}.${'png' | 'jpg'}`>(
-  imageUrl: TUrl
-) {
-  const { fabricCanvas, isMounted } = useFabricCanvas()
+export function use2DCanvasBackground<
+  TUrl extends `${string}.${'png' | 'jpg'}`,
+>(imageUrl: TUrl) {
+  const { fabricCanvas } = useFabricCanvas()
 
   // Load image by provided url, adjust and set it as fabric canvas background
   useEffect(() => {
-    isMounted &&
-      fabric.Image.fromURL(imageUrl as string, (image) => {
-        fabricCanvas.setBackgroundImage(
-          image,
-          fabricCanvas.renderAll.bind(fabricCanvas),
-          {
-            scaleY: (fabricCanvas.height ?? 1) / (image.height ?? 1),
-            scaleX: (fabricCanvas.width ?? 1) / (image.width ?? 1),
-          }
-        )
-      })
-  }, [fabricCanvas, isMounted, imageUrl])
+    if (!fabricCanvas) return
+    fabric.Image.fromURL(imageUrl as string, (image) => {
+      fabricCanvas.setBackgroundImage(
+        image,
+        fabricCanvas.renderAll.bind(fabricCanvas),
+        {
+          scaleY: (fabricCanvas.height ?? 1) / (image.height ?? 1),
+          scaleX: (fabricCanvas.width ?? 1) / (image.width ?? 1),
+        }
+      )
+    })
+  }, [fabricCanvas, imageUrl])
 }

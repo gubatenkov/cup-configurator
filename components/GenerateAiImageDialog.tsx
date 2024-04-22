@@ -9,84 +9,34 @@ import {
 } from '@/components/ui/dialog'
 import { SparklesIcon, Loader2Icon, Wand2Icon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useFabricCanvas } from '@/lib/hooks'
+// import { useFabricCanvas } from '@/lib/hooks'
 import { Input } from '@/components/ui/input'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
-import { fabric } from 'fabric'
+// import { fabric } from 'fabric'
 
-type TResponse = {
-  replicate: {
-    items: Array<{ image_resource_url: string; image: string }>
-    status: string
-    cost: number
-  }
-}
+// type TResponse = {
+//   replicate: {
+//     items: Array<{ image_resource_url: string; image: string }>
+//     status: string
+//     cost: number
+//   }
+// }
 
-const initialConfig: RequestInit = {
-  headers: {
-    authorization: `Bearer ${process.env.NEXT_PUBLIC_AI_API_KEY}`,
-    'Content-Type': 'application/json',
-  },
-  method: 'POST',
-}
+// const initialConfig: RequestInit = {
+//   headers: {
+//     authorization: `Bearer ${process.env.NEXT_PUBLIC_AI_API_KEY}`,
+//     'Content-Type': 'application/json',
+//   },
+//   method: 'POST',
+// }
 
 export default function GenerateAiImageDialog() {
-  const { fabricCanvas } = useFabricCanvas()
-  const [prompt, setPrompt] = useState<string>('')
+  // const { fabricCanvas } = useFabricCanvas()
   const [isGenerating, setIsGenerating] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [prompt, setPrompt] = useState<string>('')
   const [isError, setError] = useState(false)
-
-  useEffect(() => {
-    const controller = new AbortController()
-    const signal = controller.signal
-
-    const generateImageFromPrompt = async () => {
-      try {
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_AI_API_ENDPOINT as string,
-          {
-            ...initialConfig,
-            body: JSON.stringify({
-              providers: 'replicate',
-              resolution: '512x512',
-              text: prompt,
-            }),
-            signal,
-          }
-        )
-        const data = (await response.json()) as TResponse
-
-        if (data.replicate.status === 'success') {
-          const imageUrl = data.replicate.items[0].image_resource_url
-          // Paste generated image on canvas
-          fabric.Image.fromURL(
-            imageUrl,
-            (image) => {
-              fabricCanvas && fabricCanvas.centerObject(image).add(image)
-            },
-            {
-              crossOrigin: 'anonymous',
-            }
-          )
-        }
-      } catch (e) {
-        setError(true)
-      } finally {
-        setIsGenerating(false)
-        setIsDialogOpen(false)
-      }
-    }
-
-    // Run generation when user click on button
-    if (isGenerating) generateImageFromPrompt()
-
-    // Abort request on dialog unmount
-    return () => {
-      controller.abort()
-    }
-  }, [fabricCanvas, isGenerating, prompt])
 
   return (
     <Dialog onOpenChange={setIsDialogOpen} open={isDialogOpen}>
