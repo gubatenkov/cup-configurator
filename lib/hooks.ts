@@ -54,13 +54,13 @@ export const useFabricCanvas = () => {
 
       // Append canvas node to the provided wrapper element
       wrapperRef.current.appendChild(fabricCanvas.wrapperEl)
-
-      // Trigger update
-      setIsMounted(true)
     }
 
     // Make sure there is always only one instance
     if (!fabricCanvas) initCanvas()
+
+    // Trigger update
+    setIsMounted(true)
   }, [containerClass])
 
   return { fabricCanvas, isMounted }
