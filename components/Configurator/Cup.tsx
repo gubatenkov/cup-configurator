@@ -41,26 +41,8 @@ export default function Cup({ textureRef }: Props) {
     useRef<Mesh<BufferGeometry, MeshStandardMaterial>>(null)
   const groupRef = useRef<Group>(null)
 
-  useFrame(() => {
-    if (!textureRef.current || !groupRef.current || !cupDrawAreaRef.current)
-      return
-
-    // Prepare texture then assign to model material
-    textureRef.current.flipY = false
-    textureRef.current.anisotropy = 2
-    cupDrawAreaRef.current.material.map = textureRef.current
-    cupDrawAreaRef.current.material.map.needsUpdate = true
-
-    // Scale cup on mount animation
-    if (groupRef.current.scale.x < 1) {
-      groupRef.current.scale.x += 0.01
-      groupRef.current.scale.y += 0.01
-      groupRef.current.scale.z += 0.01
-    }
-  })
-
   return (
-    <group {...props} dispose={null} ref={groupRef} scale={0}>
+    <group {...props} dispose={null} ref={groupRef} scale={1}>
       <mesh
         geometry={nodes.Cup.geometry}
         material={materials.Porcelan}

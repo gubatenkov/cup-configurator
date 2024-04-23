@@ -39,13 +39,13 @@ export default function Result3DCanvas({ children }: { children: ReactNode }) {
         linear
       >
         <ambientLight intensity={0.2} />
-        <Sparkles
+        {/* <Sparkles
           position={[0, 3, 0]}
           speed={0.4}
           count={48}
           scale={5}
           size={4}
-        />
+        /> */}
         <Stage adjustCamera={false} environment="sunset" intensity={0.2}>
           {children}
         </Stage>

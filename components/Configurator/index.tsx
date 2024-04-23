@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card'
 import { Texture } from 'three'
 
 import Result3DCanvas from './Result3DCanvas'
-import Draw2DCanvas from './Draw2DCanvas'
+// import Draw2DCanvas from './Draw2DCanvas'
 // import Cup from './Cup'
 
 export default function Configurator({ children }: { children: ReactNode }) {
