@@ -16,8 +16,6 @@ type Props = {
 
 export default function Draw2DCanvas({ textureRef }: Props) {
   const { fabricCanvas, isMounted } = useFabricCanvas()
-  // Load default cup configuration
-  use2DCanvasBackground('/assets/backgrounds/default-cup-configuration.png')
 
   return (
     <>
