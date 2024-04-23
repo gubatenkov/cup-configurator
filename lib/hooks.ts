@@ -17,7 +17,6 @@ export const useFabricCanvas = () => {
   const containerClass = '.canvas-wrapper'
 
   useEffect(() => {
-    // window.addEventListener('resize', handleCanvasResize)
     wrapperRef.current =
       document.querySelector<HTMLDivElement>(containerClass) ?? null
 
@@ -62,17 +61,16 @@ export const useFabricCanvas = () => {
 
     // Make sure there is always only one instance
     if (!fabricCanvas) initCanvas()
-
-    // TO-DO: implement resizing logic for canvas
-    // const handleCanvasResize = () => {}
   }, [containerClass])
 
   return { fabricCanvas, isMounted }
 }
 
-export function use2DCanvasBackground<
-  TUrl extends `${string}.${'png' | 'jpg'}`,
->(imageUrl: TUrl) {
+export const use2DCanvasBackground = <
+  TImageUrl extends `${string}.${'png' | 'jpg'}`,
+>(
+  imageUrl: TImageUrl
+) => {
   const { fabricCanvas } = useFabricCanvas()
 
   // Load image by provided url, adjust and set it as fabric canvas background

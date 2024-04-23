@@ -1,8 +1,10 @@
 'use client'
 
-import { type ReactNode, useRef } from 'react'
+import type { ReactNode } from 'react'
+// import type { Texture } from 'three'
+
 import { Card } from '@/components/ui/card'
-import { Texture } from 'three'
+// import { useRef } from 'react'
 
 import Result3DCanvas from './Result3DCanvas'
 // import Draw2DCanvas from './Draw2DCanvas'
