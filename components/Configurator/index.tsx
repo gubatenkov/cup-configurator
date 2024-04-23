@@ -15,8 +15,7 @@ export default function Configurator({ children }: { children: ReactNode }) {
     <>
       <Card className="relative overflow-hidden border-none">
         <Result3DCanvas>
-          {/* Uncomment component below to remove warning */}
-          {/* <Cup textureRef={textureRef} /> */}
+          <>{/* <Cup textureRef={textureRef} /> */}</>
         </Result3DCanvas>
       </Card>
       <div className="grid grid-rows-2 gap-4">
