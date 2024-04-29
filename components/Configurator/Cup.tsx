@@ -1,15 +1,16 @@
-import type { MutableRefObject } from 'react'
 import type { GLTF } from 'three-stdlib'
 
 import {
   MeshStandardMaterial,
   BufferGeometry,
+  CanvasTexture,
   Texture,
   Group,
   Mesh,
 } from 'three'
 import { useTexture, useGLTF, Shadow } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+import { useStore } from '@/lib/store'
 import { useRef } from 'react'
 
 type GLTFResult = GLTF & {
@@ -23,26 +24,49 @@ type GLTFResult = GLTF & {
   }
 }
 
-type Props = {
-  textureRef: MutableRefObject<undefined | Texture>
-}
+type CupDrawAreaMesh = Mesh<BufferGeometry, MeshStandardMaterial>
 
+const cupModelPath = '/models/cup.glb'
 const baseTexturesPath = '/textures'
 
-export default function Cup({ textureRef }: Props) {
-  const { materials, nodes } = useGLTF('/models/cup.glb', true) as GLTFResult
+export default function Cup() {
+  const { materials, nodes } = useGLTF(cupModelPath, true) as GLTFResult
   const props = useTexture({
     displacementMap: `${baseTexturesPath}/displacement.jpg`,
     roughnessMap: `${baseTexturesPath}/roughness.jpg`,
     normalMap: `${baseTexturesPath}/normalDX.jpg`,
     map: `${baseTexturesPath}/color.jpg`,
   })
-  const cupDrawAreaRef =
-    useRef<Mesh<BufferGeometry, MeshStandardMaterial>>(null)
+
+  const canvas = useStore(({ fabricCanvas }) => fabricCanvas)
+  const texture = canvas && new CanvasTexture(canvas.lowerCanvasEl)
+
+  const cupDrawAreaRef = useRef<CupDrawAreaMesh>(null)
   const groupRef = useRef<Group>(null)
 
+  useFrame(() => {
+    // Prepare texture settings
+    if (texture) {
+      texture.flipY = false
+      texture.anisotropy = 2
+    }
+
+    // Assign texture to the target material
+    if (cupDrawAreaRef.current) {
+      cupDrawAreaRef.current.material.map = texture
+      ;(cupDrawAreaRef.current.material.map as Texture).needsUpdate = true
+    }
+
+    // Scale cup animation
+    if (groupRef.current && groupRef.current.scale.x < 1) {
+      groupRef.current.scale.x += 0.01
+      groupRef.current.scale.y += 0.01
+      groupRef.current.scale.z += 0.01
+    }
+  })
+
   return (
-    <group {...props} dispose={null} ref={groupRef} scale={1}>
+    <group {...props} dispose={null} ref={groupRef} scale={0}>
       <mesh
         geometry={nodes.Cup.geometry}
         material={materials.Porcelan}
@@ -68,4 +92,4 @@ export default function Cup({ textureRef }: Props) {
   )
 }
 
-useGLTF.preload('/models/cup.glb')
+useGLTF.preload(cupModelPath)

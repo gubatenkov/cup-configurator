@@ -11,19 +11,15 @@ export default function SetBackgroundButton({
   imageUrl: string
   index: number
 }) {
-  const { fabricCanvas } = useFabricCanvas()
+  const { canvas } = useFabricCanvas()
 
   const handleClick = () => {
-    if (!fabricCanvas) return
+    if (!canvas) return
     fabric.Image.fromURL(imageUrl, (image) => {
-      fabricCanvas.setBackgroundImage(
-        image,
-        fabricCanvas.renderAll.bind(fabricCanvas),
-        {
-          scaleY: (fabricCanvas.height ?? 1) / (image.height ?? 1),
-          scaleX: (fabricCanvas.width ?? 1) / (image.width ?? 1),
-        }
-      )
+      canvas.setBackgroundImage(image, canvas.renderAll.bind(canvas), {
+        scaleY: (canvas.height ?? 1) / (image.height ?? 1),
+        scaleX: (canvas.width ?? 1) / (image.width ?? 1),
+      })
     })
   }
 

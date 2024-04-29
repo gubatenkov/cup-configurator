@@ -10,14 +10,15 @@ import {
   XIcon,
 } from 'lucide-react'
 import { ButtonProps, Button } from '@/components/ui/button'
+import { downloadCanvasAsImage, cn } from '@/lib/utils'
 import WithTooltip from '@/components/WithTooltip'
 import { useFabricCanvas } from '@/lib/hooks'
+import { Image } from 'fabric/fabric-impl'
 import { useState, useMemo } from 'react'
-import { cn } from '@/lib/utils'
 
 import IntrinsicAttributes = JSX.IntrinsicAttributes
 
-type TCanvasAction = {
+type CanvasAction = {
   component: {
     element: ForwardRefExoticComponent<
       ButtonProps & RefAttributes<HTMLButtonElement>
@@ -30,11 +31,30 @@ type TCanvasAction = {
 
 export default function Canvas2DActions() {
   const [isActionsVisible, setIsActionsVisible] = useState(false)
-  const { fabricCanvas } = useFabricCanvas()
-  const actions: TCanvasAction[] = useMemo(
+  const { canvas } = useFabricCanvas()
+  const actions: CanvasAction[] = useMemo(
     () =>
       [
         {
+          component: {
+            props: {
+              onClick: () => {
+                if (!canvas) return
+                // Remove all objects from fabric canvas
+                canvas
+                  .remove(...canvas.getObjects())
+                  // Clear canvas background
+                  .setBackgroundImage(
+                    null as unknown as Image,
+                    canvas.renderAll.bind(canvas)
+                  )
+                  // Patterns are set as the background color, so don't forget to clear them too
+                  .setBackgroundColor('#f2f2f2', () => {})
+                  .renderAll()
+              },
+            },
+            element: Button,
+          },
           icon: {
             props: {
               className: '',
@@ -42,15 +62,29 @@ export default function Canvas2DActions() {
             },
             element: XIcon,
           },
-          component: {
-            props: {
-              onClick: () => {},
-            },
-            element: Button,
-          },
           name: 'Clear canvas',
         },
         {
+          component: {
+            props: {
+              onClick: () => {
+                if (!canvas) return
+                // Clear canvas background
+                canvas
+                  .setBackgroundImage(
+                    null as unknown as Image,
+                    canvas.renderAll.bind(canvas)
+                  )
+                  .setBackgroundColor(
+                    // The patterns are the background, so clean it up as well.
+                    '#f2f2f2',
+                    () => {}
+                  )
+                  .renderAll()
+              },
+            },
+            element: Button,
+          },
           icon: {
             props: {
               className: '',
@@ -58,15 +92,20 @@ export default function Canvas2DActions() {
             },
             element: XSquareIcon,
           },
-          component: {
-            props: {
-              onClick: () => {},
-            },
-            element: Button,
-          },
           name: 'Remove background',
         },
         {
+          component: {
+            props: {
+              onClick: () => {
+                if (!canvas) return
+                const activeObject = canvas.getActiveObject()
+                if (!activeObject) return
+                canvas.sendToBack(activeObject).discardActiveObject()
+              },
+            },
+            element: Button,
+          },
           icon: {
             props: {
               className: '',
@@ -74,15 +113,20 @@ export default function Canvas2DActions() {
             },
             element: ArrowDownFromLineIcon,
           },
-          component: {
-            props: {
-              onClick: () => {},
-            },
-            element: Button,
-          },
           name: 'Send selection to back',
         },
         {
+          component: {
+            props: {
+              onClick: () => {
+                if (!canvas) return
+                const activeObject = canvas.getActiveObject()
+                if (!activeObject) return
+                canvas.bringToFront(activeObject).discardActiveObject()
+              },
+            },
+            element: Button,
+          },
           icon: {
             props: {
               className: 'rotate-180',
@@ -90,15 +134,18 @@ export default function Canvas2DActions() {
             },
             element: ArrowDownFromLineIcon,
           },
-          component: {
-            props: {
-              onClick: () => {},
-            },
-            element: Button,
-          },
           name: 'Bring selection to front',
         },
         {
+          component: {
+            props: {
+              onClick: () => {
+                if (!canvas) return
+                downloadCanvasAsImage(canvas.lowerCanvasEl)
+              },
+            },
+            element: Button,
+          },
           icon: {
             props: {
               className: '',
@@ -106,16 +153,10 @@ export default function Canvas2DActions() {
             },
             element: FileDownIcon,
           },
-          component: {
-            props: {
-              onClick: () => {},
-            },
-            element: Button,
-          },
           name: 'Save canvas as image',
         },
-      ] satisfies TCanvasAction[],
-    [fabricCanvas]
+      ] satisfies CanvasAction[],
+    [canvas]
   )
 
   const handleToggleActions = () => {

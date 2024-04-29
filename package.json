@@ -30,7 +30,8 @@
     "react-dom": "^18",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.153.0"
+    "three": "^0.153.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/fabric": "^5.3.6",

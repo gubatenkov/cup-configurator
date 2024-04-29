@@ -8,12 +8,12 @@ import { Canvas } from '@react-three/fiber'
 import { NoToneMapping } from 'three'
 import { useState } from 'react'
 
-export default function Result3DCanvas({ children }: { children: ReactNode }) {
+export default function Canvas3D({ children }: { children: ReactNode }) {
   const [isRotating, setIsRotating] = useState(true)
 
   return (
     <>
-      {/* Actions with tooltips*/}
+      {/* Canvas actions */}
       <WithTooltip tip="Toggle model rotation">
         <Button
           className="absolute bottom-4 right-4 z-50 h-10 w-10 !rounded-full !p-0 opacity-60"
@@ -26,7 +26,8 @@ export default function Result3DCanvas({ children }: { children: ReactNode }) {
           )}
         </Button>
       </WithTooltip>
-      {/* Canvas element */}
+
+      {/* Basic scene setup */}
       <Canvas
         camera={{
           position: [0, 2, 5],
@@ -35,17 +36,17 @@ export default function Result3DCanvas({ children }: { children: ReactNode }) {
           fov: 50,
         }}
         gl={{ toneMapping: NoToneMapping, antialias: true }}
-        className="result-canvas"
+        className="canvas3D"
         linear
       >
         <ambientLight intensity={0.2} />
-        {/* <Sparkles
+        <Sparkles
           position={[0, 3, 0]}
           speed={0.4}
           count={48}
           scale={5}
           size={4}
-        /> */}
+        />
         <Stage adjustCamera={false} environment="sunset" intensity={0.2}>
           {children}
         </Stage>

@@ -1,8 +1,8 @@
 'use client'
 
 import ImageButton from '@/components/ImageButton'
-// import { useFabricCanvas } from '@/lib/hooks'
-// import { fabric } from 'fabric'
+import { useFabricCanvas } from '@/lib/hooks'
+import { fabric } from 'fabric'
 
 export default function SetImageButton({
   imageUrl,
@@ -11,13 +11,16 @@ export default function SetImageButton({
   imageUrl: string
   index: number
 }) {
-  // const { fabricCanvas } = useFabricCanvas()
+  const { canvas } = useFabricCanvas()
 
-  return (
-    <ImageButton
-      onClick={() => console.log('handle click')}
-      imageUrl={imageUrl}
-      index={index}
-    />
-  )
+  const handleClick = () => {
+    if (!canvas) return
+    fabric.Image.fromURL(imageUrl, (image) => {
+      image.scale(0.5)
+      canvas.centerObject(image)
+      canvas.add(image)
+    })
+  }
+
+  return <ImageButton onClick={handleClick} imageUrl={imageUrl} index={index} />
 }

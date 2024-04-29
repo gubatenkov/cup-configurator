@@ -16,25 +16,25 @@ import { useMemo } from 'react'
 import { fabric } from 'fabric'
 
 export default function GeometryList() {
-  const { fabricCanvas } = useFabricCanvas()
+  const { canvas } = useFabricCanvas()
   const geometryItems = useMemo(
     () => [
       {
         handleAddItem: () => {
-          if (!fabricCanvas) return
+          if (!canvas) return
           const line = new fabric.Line([125, 250, 175, 250], {
             stroke: 'black',
             strokeWidth: 2,
             fill: 'black',
           })
-          fabricCanvas.centerObject(line)
-          fabricCanvas.add(line)
+          canvas.centerObject(line)
+          canvas.add(line)
         },
         icon: MinusIcon,
       },
       {
         handleAddItem: () => {
-          if (!fabricCanvas) return
+          if (!canvas) return
           const ellipse = new fabric.Ellipse({
             fill: 'transparent',
             stroke: 'black',
@@ -42,27 +42,27 @@ export default function GeometryList() {
             rx: 50,
             ry: 50,
           })
-          fabricCanvas.centerObject(ellipse)
-          fabricCanvas.add(ellipse)
+          canvas.centerObject(ellipse)
+          canvas.add(ellipse)
         },
         icon: CircleIcon,
       },
       {
         handleAddItem: () => {
-          if (!fabricCanvas) return
+          if (!canvas) return
           const triangle = new fabric.Triangle({
             fill: 'transparent',
             stroke: 'black',
             strokeWidth: 2,
           })
-          fabricCanvas.centerObject(triangle)
-          fabricCanvas.add(triangle)
+          canvas.centerObject(triangle)
+          canvas.add(triangle)
         },
         icon: TriangleIcon,
       },
       {
         handleAddItem: () => {
-          if (!fabricCanvas) return
+          if (!canvas) return
           const rectangle = new fabric.Rect({
             fill: 'transparent',
             stroke: 'black',
@@ -70,14 +70,14 @@ export default function GeometryList() {
             height: 100,
             width: 100,
           })
-          fabricCanvas.centerObject(rectangle)
-          fabricCanvas.add(rectangle)
+          canvas.centerObject(rectangle)
+          canvas.add(rectangle)
         },
         icon: SquareIcon,
       },
       {
         handleAddItem: () => {
-          if (!fabricCanvas) return
+          if (!canvas) return
           const svgStr = `<svg
       xmlns="http://www.w3.org/2000/svg"
       stroke-linejoin="round"
@@ -96,53 +96,53 @@ export default function GeometryList() {
     </svg>`.toString()
           fabric.loadSVGFromString(svgStr, (results) => {
             const group = fabric.util.groupSVGElements(results)
-            fabricCanvas.centerObject(group)
-            fabricCanvas.add(group)
+            canvas.centerObject(group)
+            canvas.add(group)
           })
         },
         icon: BabyIcon,
       },
       {
         handleAddItem: () => {
-          if (!fabricCanvas) return
+          if (!canvas) return
           const svgStr =
             `<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`.toString()
           fabric.loadSVGFromString(svgStr, (results) => {
             const group = fabric.util.groupSVGElements(results)
-            fabricCanvas.centerObject(group)
-            fabricCanvas.add(group)
+            canvas.centerObject(group)
+            canvas.add(group)
           })
         },
         icon: SunIcon,
       },
       {
         handleAddItem: () => {
-          if (!fabricCanvas) return
+          if (!canvas) return
           const svgStr =
             `<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>`.toString()
           fabric.loadSVGFromString(svgStr, (results) => {
             const group = fabric.util.groupSVGElements(results)
-            fabricCanvas.centerObject(group)
-            fabricCanvas.add(group)
+            canvas.centerObject(group)
+            canvas.add(group)
           })
         },
         icon: HeartIcon,
       },
       {
         handleAddItem: () => {
-          if (!fabricCanvas) return
+          if (!canvas) return
           const svgStr =
             `<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smile"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>`.toString()
           fabric.loadSVGFromString(svgStr, (results) => {
             const group = fabric.util.groupSVGElements(results)
-            fabricCanvas.centerObject(group)
-            fabricCanvas.add(group)
+            canvas.centerObject(group)
+            canvas.add(group)
           })
         },
         icon: SmileIcon,
       },
     ],
-    [fabricCanvas]
+    [canvas]
   )
 
   return geometryItems.map(({ handleAddItem, icon: Icon }, index) => (
