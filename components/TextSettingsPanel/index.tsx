@@ -22,60 +22,14 @@ export default function TextSettingsPanel({ children }: Props) {
   useEffect(() => {
     if (!canvas) return
 
-    const handleUpdateActiveTextbox = () => {
-      // Get selected canvas object
-      const activeObj = canvas.getActiveObject()
-      // Check if this is fabric Text
-      if (activeObj instanceof fabric.IText) {
-        // Apply updates to text
-        activeObj.set({
-          ...textSettings,
-          text: activeObj.text,
-        })
-        // Render updates on fabric canvas
-        canvas.renderAll()
-      }
-    }
+    const handleUpdateActiveTextbox = () => {}
 
     handleUpdateActiveTextbox()
   }, [canvas, textSettings])
 
   // Watch current text selection
   useEffect(() => {
-    const handleCurrentSelection = (e: fabric.IEvent<MouseEvent>) => {
-      // When no active objects on canvas
-      if (!e.selected?.length) return
-
-      const selection = e.selected[0]
-      // Continue if selection is fabric.Textbox
-      if (selection instanceof fabric.Textbox) {
-        const {
-          backgroundColor,
-          fontWeight,
-          fontFamily,
-          lineHeight,
-          textAlign,
-          underline,
-          fontStyle,
-          fontSize,
-          text,
-          fill,
-        } = selection
-
-        setTextSettings({
-          backgroundColor,
-          fontWeight,
-          fontFamily,
-          lineHeight,
-          textAlign,
-          underline,
-          fontStyle,
-          fontSize,
-          text,
-          fill,
-        })
-      }
-    }
+    const handleCurrentSelection = (e: fabric.IEvent<MouseEvent>) => {}
 
     canvas
       ?.on('selection:created', handleCurrentSelection)

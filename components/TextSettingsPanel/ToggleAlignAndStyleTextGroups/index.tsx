@@ -20,7 +20,10 @@ export default function ToggleAlignAndStyleTextGroups() {
 
   const handleStyleValueChange = (styles: string[]) => {}
 
-  const getFontStyleValue = (): string[] => {}
+  const getFontStyleValue = (): string[] => {
+    const styles: string[] = []
+    return styles
+  }
 
   return (
     <>
