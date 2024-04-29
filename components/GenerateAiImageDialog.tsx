@@ -32,11 +32,11 @@ const initialConfig: RequestInit = {
 }
 
 export default function GenerateAiImageDialog() {
-  const { fabricCanvas } = useFabricCanvas()
-  const [prompt, setPrompt] = useState<string>('')
   const [isGenerating, setIsGenerating] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [prompt, setPrompt] = useState<string>('')
   const [isError, setError] = useState(false)
+  const { canvas } = useFabricCanvas()
 
   useEffect(() => {
     const controller = new AbortController()
@@ -64,7 +64,7 @@ export default function GenerateAiImageDialog() {
           fabric.Image.fromURL(
             imageUrl,
             (image) => {
-              fabricCanvas && fabricCanvas.centerObject(image).add(image)
+              canvas && canvas.centerObject(image).add(image)
             },
             {
               crossOrigin: 'anonymous',
@@ -82,11 +82,11 @@ export default function GenerateAiImageDialog() {
     // Run generation when user click on button
     if (isGenerating) generateImageFromPrompt()
 
-    // Abort request on dialog unmount
-    return () => {
-      controller.abort()
-    }
-  }, [fabricCanvas, isGenerating, prompt])
+    /* To prevent a race condition, let's abort the generation request with a
+     * signal if the user closes the dialog before receiving a response with
+     * the generation result */
+    return () => controller.abort()
+  }, [canvas, isGenerating, prompt])
 
   return (
     <Dialog onOpenChange={setIsDialogOpen} open={isDialogOpen}>

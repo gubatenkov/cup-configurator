@@ -1,15 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
-  experimental: {
-    outputFileTracingExcludes: {
-      'canvas': ['**canvas**']
-    }
-  },
   webpack: (config) => {
-    config.externals = [...config.externals, "canvas", "jsdom"]
+    config.externals.push({
+      'utf-8-validate': 'commonjs utf-8-validate',
+      bufferutil: 'commonjs bufferutil',
+      canvas: 'commonjs canvas',
+    })
     return config
-  }
-};
+  },
+  reactStrictMode: false,
+}
 
-export default nextConfig;
+export default nextConfig

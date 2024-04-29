@@ -1,11 +1,11 @@
-import type { TextOptions } from 'fabric/fabric-impl'
+import type { AlignValue } from '@/lib/types'
 
 import { AlignCenterIcon, AlignRightIcon, AlignLeftIcon } from 'lucide-react'
 import { ToggleGroupItem, ToggleGroup } from '@/components/ui/toggle-group'
 
 type Props = {
-  onValueChange: (value: NonNullable<TextOptions['textAlign']>) => void
-  value: NonNullable<TextOptions['textAlign']>
+  onValueChange: (value: AlignValue) => void
+  value: AlignValue
 }
 
 export default function ToggleAlignGroup(props: Props) {

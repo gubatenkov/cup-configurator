@@ -11,20 +11,21 @@ export default function SetPatternButton({
   imageUrl: string
   index: number
 }) {
-  const { fabricCanvas, isMounted } = useFabricCanvas()
+  const { canvas } = useFabricCanvas()
 
   const handleClick = () => {
-    if (!isMounted) return
+    if (!canvas) return
 
     // Clear canvas background
-    fabricCanvas.setBackgroundImage(
+    canvas.setBackgroundImage(
       null as unknown as Image,
-      fabricCanvas.renderAll.bind(fabricCanvas)
+      canvas.renderAll.bind(canvas)
     )
+
     // Add new canvas background
-    fabricCanvas.setBackgroundColor(
+    canvas.setBackgroundColor(
       { source: imageUrl, repeat: 'repeat' } as Pattern,
-      fabricCanvas.renderAll.bind(fabricCanvas)
+      canvas.renderAll.bind(canvas)
     )
   }
 

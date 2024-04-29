@@ -11,15 +11,15 @@ export default function SetImageButton({
   imageUrl: string
   index: number
 }) {
-  const { fabricCanvas, isMounted } = useFabricCanvas()
+  const { canvas } = useFabricCanvas()
 
   const handleClick = () => {
-    isMounted &&
-      fabric.Image.fromURL(imageUrl, (image) => {
-        image.scale(0.5)
-        fabricCanvas.centerObject(image)
-        fabricCanvas.add(image)
-      })
+    if (!canvas) return
+    fabric.Image.fromURL(imageUrl, (image) => {
+      image.scale(0.5)
+      canvas.centerObject(image)
+      canvas.add(image)
+    })
   }
 
   return <ImageButton onClick={handleClick} imageUrl={imageUrl} index={index} />

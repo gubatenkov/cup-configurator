@@ -1,26 +1,23 @@
 'use client'
 
-import { type ElementRef, useEffect, useRef } from 'react'
+import type { ElementRef } from 'react'
+
 import { useFabricCanvas } from '@/lib/hooks'
 import { PaperclipIcon } from 'lucide-react'
 import { Card } from '@/components/ui/card'
+import { useEffect, useRef } from 'react'
 import { fabric } from 'fabric'
 
 export default function UploadImageButton() {
-  const { isMounted: isCanvasMounted, fabricCanvas } = useFabricCanvas()
   const inputRef = useRef<ElementRef<'input'>>(null)
+  const { canvas } = useFabricCanvas()
 
   // Listen to the input for the image load event, and then display it on the canvas
   useEffect(() => {
     const inputElement = inputRef.current
     if (!inputElement) return
 
-    // Init listener
-    isCanvasMounted &&
-      inputElement.addEventListener('change', handleUploadedImage)
-
-    // Handle image upload
-    function handleUploadedImage(e: Event) {
+    const handleUploadedImage = (e: Event) => {
       const eventTarget = e.target as HTMLInputElement
       const fileList = eventTarget.files
       if (!fileList || fileList.length === 0) return
@@ -30,18 +27,19 @@ export default function UploadImageButton() {
       reader.onload = (e) => {
         const data = e.target!.result
         fabric.Image.fromURL(data as string, (img) => {
-          const scaleTo =
-            fabricCanvas.width && img.width && fabricCanvas.width / img.width
+          if (!canvas) return
+          const scaleTo = canvas.width && img.width && canvas.width / img.width
           const imageObject = img.scale(scaleTo || 0.5)
-          fabricCanvas.centerObject(imageObject).add(imageObject).renderAll()
+          canvas.centerObject(imageObject).add(imageObject).renderAll()
         })
       }
       reader.readAsDataURL(loadedImageFile)
     }
 
-    // Default cleanup
+    inputElement.addEventListener('change', handleUploadedImage)
+
     return () => inputElement.removeEventListener('change', handleUploadedImage)
-  }, [fabricCanvas, isCanvasMounted])
+  }, [canvas])
 
   return (
     <Card className="relative flex h-full w-full items-center justify-center">

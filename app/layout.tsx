@@ -2,7 +2,6 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 
 import Configurator from '@/components/Configurator'
-import { fontsPathsToPreload } from '@/lib/data'
 import Providers from '@/components/Providers'
 import { Inter } from 'next/font/google'
 import Header from '@/components/Header'
@@ -11,9 +10,17 @@ import { cn } from '@/lib/utils'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
+const preloadPaths = [
+  '/assets/fonts/lato/LatoRegular.woff2',
+  '/assets/fonts/lato/LatoBold.woff2',
+  '/assets/fonts/caveat/CaveatVariableFont_wght.woff2',
+  '/assets/fonts/merienda/MeriendaVariableFont_wght.woff2',
+  '/assets/fonts/lemonada/LemonadaVariableFont_wght.woff2',
+  '/assets/fonts/dancing-script/DancingScriptVariableFont_wght.woff2',
+]
 
 export const metadata: Metadata = {
-  title: 'Cup Configurator',
+  title: '3D Cup Configurator',
   description: '',
 }
 
@@ -25,7 +32,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <head>
-        {fontsPathsToPreload.map((path) => (
+        {preloadPaths.map((path) => (
           <link
             crossOrigin="anonymous"
             rel="preload"
@@ -38,7 +45,8 @@ export default function RootLayout({
       <body className={cn(inter.className, 'antialiased')}>
         <Providers>
           <Header />
-          <main className="main mx-auto grid h-[calc(100%-var(--nav-height))] w-full grid-cols-2 gap-4 p-4">
+          {/* Mobiles and tablets are not available yet */}
+          <main className="main mx-auto hidden h-[calc(100%-var(--nav-height))] w-full grid-cols-2 gap-4 p-4 lg:grid">
             <Configurator>{children}</Configurator>
           </main>
         </Providers>
