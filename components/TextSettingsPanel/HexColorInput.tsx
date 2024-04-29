@@ -8,12 +8,10 @@ import { useStore } from '@/lib/store'
 type Props = { name: 'backgroundColor' | 'fill' }
 
 export default function HexColorInput({ name }: Props) {
-  const { setTextSettings, textSettings } = useStore(
-    ({ setTextSettings, panels }) => ({
-      textSettings: panels.text.data.textSettings,
-      setTextSettings,
-    })
-  )
+  const { setTextSettings } = useStore(({ setTextSettings, panels }) => ({
+    textSettings: panels.text.data.textSettings,
+    setTextSettings,
+  }))
   const inputRef = useRef<ElementRef<'input'>>(null)
 
   const handleClick = () => {
@@ -34,8 +32,6 @@ export default function HexColorInput({ name }: Props) {
       <Input
         className="h-8 placeholder:text-xs 2xl:h-9 2xl:placeholder:text-sm"
         placeholder="HEX string e.g. #ffffff"
-        // onChange={handleChangeColorInputs}
-        // value={colorInputs.fill}
         ref={inputRef}
         type="string"
         name={name}

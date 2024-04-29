@@ -23,11 +23,7 @@ export default function FontColorListItems() {
     })
   )
 
-  const updateFontColor = (color: string) => {
-    setTextSettings({
-      fill: color,
-    })
-  }
+  // const updateFontColor = (color: string) => {}
 
   return fontColors.map((color, index) => (
     <li
@@ -35,7 +31,7 @@ export default function FontColorListItems() {
       style={{
         backgroundColor: color,
       }}
-      onClick={() => updateFontColor(color)}
+      // onClick={() => updateFontColor(color)}
       key={index}
     >
       <div

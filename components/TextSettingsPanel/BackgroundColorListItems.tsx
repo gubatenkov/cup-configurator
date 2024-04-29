@@ -29,11 +29,7 @@ export default function BackgroundColorListItems() {
     })
   )
 
-  const updateBackgroundColor = (color: string) => {
-    setTextSettings({
-      backgroundColor: color,
-    })
-  }
+  // const updateBackgroundColor = (color: string) => {}
 
   return fillColors.map((color, index) => (
     <li
@@ -41,7 +37,7 @@ export default function BackgroundColorListItems() {
       style={{
         backgroundColor: color,
       }}
-      onClick={() => updateBackgroundColor(color)}
+      // onClick={() => updateBackgroundColor(color)}
       key={index}
     >
       <div

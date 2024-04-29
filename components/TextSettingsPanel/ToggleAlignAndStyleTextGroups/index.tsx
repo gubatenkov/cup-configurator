@@ -16,39 +16,22 @@ export default function ToggleAlignAndStyleTextGroups() {
     })
   )
 
+  const handleAlignValueChange = (value: AlignValue) => {}
+
+  const handleStyleValueChange = (styles: string[]) => {}
+
+  const getFontStyleValue = (): string[] => {}
+
   return (
     <>
       <ToggleAlignGroup
-        onValueChange={(value) => {
-          if (!value) return
-          setTextSettings({
-            textAlign: value,
-          })
-        }}
         value={(textSettings.textAlign ?? 'left') as AlignValue}
+        onValueChange={handleAlignValueChange}
       />
       <Separator className="mx-4 h-4 2xl:mx-6 2xl:h-6" orientation="vertical" />
       <ToggleStyleGroup
-        value={((): string[] => {
-          const styles = []
-          if (textSettings.fontWeight === 'bold') {
-            styles.push('bold')
-          }
-          if (textSettings.fontStyle === 'italic') {
-            styles.push('italic')
-          }
-          if (textSettings.underline) {
-            styles.push('underline')
-          }
-          return styles
-        })()}
-        onValueChange={(styles) => {
-          setTextSettings({
-            fontStyle: styles.includes('italic') ? 'italic' : 'normal',
-            fontWeight: styles.includes('bold') ? 'bold' : 'normal',
-            underline: styles.includes('underline'),
-          })
-        }}
+        onValueChange={handleStyleValueChange}
+        value={getFontStyleValue()}
       />
     </>
   )

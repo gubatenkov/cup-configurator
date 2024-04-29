@@ -13,7 +13,7 @@ import { ButtonProps, Button } from '@/components/ui/button'
 import { downloadCanvasAsImage, cn } from '@/lib/utils'
 import WithTooltip from '@/components/WithTooltip'
 import { useFabricCanvas } from '@/lib/hooks'
-import { Image } from 'fabric/fabric-impl'
+// import { Image } from 'fabric/fabric-impl'
 import { useState, useMemo } from 'react'
 
 import IntrinsicAttributes = JSX.IntrinsicAttributes
@@ -32,29 +32,10 @@ type CanvasAction = {
 export default function Canvas2DActions() {
   const [isActionsVisible, setIsActionsVisible] = useState(false)
   const { canvas } = useFabricCanvas()
-  const actions: CanvasAction[] = useMemo(
+  const actions = useMemo<CanvasAction[]>(
     () =>
       [
         {
-          component: {
-            props: {
-              onClick: () => {
-                if (!canvas) return
-                // Remove all objects from fabric canvas
-                canvas
-                  .remove(...canvas.getObjects())
-                  // Clear canvas background
-                  .setBackgroundImage(
-                    null as unknown as Image,
-                    canvas.renderAll.bind(canvas)
-                  )
-                  // Patterns are set as the background color, so don't forget to clear them too
-                  .setBackgroundColor('#f2f2f2', () => {})
-                  .renderAll()
-              },
-            },
-            element: Button,
-          },
           icon: {
             props: {
               className: '',
@@ -62,29 +43,15 @@ export default function Canvas2DActions() {
             },
             element: XIcon,
           },
-          name: 'Clear canvas',
-        },
-        {
           component: {
             props: {
-              onClick: () => {
-                if (!canvas) return
-                // Clear canvas background
-                canvas
-                  .setBackgroundImage(
-                    null as unknown as Image,
-                    canvas.renderAll.bind(canvas)
-                  )
-                  .setBackgroundColor(
-                    // The patterns are the background, so clean it up as well.
-                    '#f2f2f2',
-                    () => {}
-                  )
-                  .renderAll()
-              },
+              onClick: () => {},
             },
             element: Button,
           },
+          name: 'Clear canvas',
+        },
+        {
           icon: {
             props: {
               className: '',
@@ -92,20 +59,15 @@ export default function Canvas2DActions() {
             },
             element: XSquareIcon,
           },
-          name: 'Remove background',
-        },
-        {
           component: {
             props: {
-              onClick: () => {
-                if (!canvas) return
-                const activeObject = canvas.getActiveObject()
-                if (!activeObject) return
-                canvas.sendToBack(activeObject).discardActiveObject()
-              },
+              onClick: () => {},
             },
             element: Button,
           },
+          name: 'Remove background',
+        },
+        {
           icon: {
             props: {
               className: '',
@@ -113,20 +75,15 @@ export default function Canvas2DActions() {
             },
             element: ArrowDownFromLineIcon,
           },
-          name: 'Send selection to back',
-        },
-        {
           component: {
             props: {
-              onClick: () => {
-                if (!canvas) return
-                const activeObject = canvas.getActiveObject()
-                if (!activeObject) return
-                canvas.bringToFront(activeObject).discardActiveObject()
-              },
+              onClick: () => {},
             },
             element: Button,
           },
+          name: 'Send selection to back',
+        },
+        {
           icon: {
             props: {
               className: 'rotate-180',
@@ -134,24 +91,27 @@ export default function Canvas2DActions() {
             },
             element: ArrowDownFromLineIcon,
           },
-          name: 'Bring selection to front',
-        },
-        {
           component: {
             props: {
-              onClick: () => {
-                if (!canvas) return
-                downloadCanvasAsImage(canvas.lowerCanvasEl)
-              },
+              onClick: () => {},
             },
             element: Button,
           },
+          name: 'Bring selection to front',
+        },
+        {
           icon: {
             props: {
               className: '',
               size: 16,
             },
             element: FileDownIcon,
+          },
+          component: {
+            props: {
+              onClick: () => {},
+            },
+            element: Button,
           },
           name: 'Save canvas as image',
         },

@@ -9,7 +9,7 @@ import {
   Mesh,
 } from 'three'
 import { useTexture, useGLTF, Shadow } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+// import { useFrame } from '@react-three/fiber'
 import { useStore } from '@/lib/store'
 import { useRef } from 'react'
 
@@ -38,32 +38,11 @@ export default function Cup() {
     map: `${baseTexturesPath}/color.jpg`,
   })
 
-  const canvas = useStore(({ fabricCanvas }) => fabricCanvas)
-  const texture = canvas && new CanvasTexture(canvas.lowerCanvasEl)
+  // const canvas = useStore(({ fabricCanvas }) => fabricCanvas)
+  // const texture = canvas && new CanvasTexture(canvas.lowerCanvasEl)
 
   const cupDrawAreaRef = useRef<CupDrawAreaMesh>(null)
   const groupRef = useRef<Group>(null)
-
-  useFrame(() => {
-    // Prepare texture settings
-    if (texture) {
-      texture.flipY = false
-      texture.anisotropy = 2
-    }
-
-    // Assign texture to the target material
-    if (cupDrawAreaRef.current) {
-      cupDrawAreaRef.current.material.map = texture
-      ;(cupDrawAreaRef.current.material.map as Texture).needsUpdate = true
-    }
-
-    // Scale cup animation
-    if (groupRef.current && groupRef.current.scale.x < 1) {
-      groupRef.current.scale.x += 0.01
-      groupRef.current.scale.y += 0.01
-      groupRef.current.scale.z += 0.01
-    }
-  })
 
   return (
     <group {...props} dispose={null} ref={groupRef} scale={0}>

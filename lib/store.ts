@@ -68,22 +68,7 @@ export const useStore = create<Store>((set) => ({
       id: 2,
     },
   },
-  setTextSettings: (partialTextSettings: PartialTextSettings) =>
-    set((prevState) => ({
-      panels: {
-        ...prevState.panels,
-        text: {
-          ...prevState.panels['text'],
-          data: {
-            ...prevState.panels['text'].data,
-            textSettings: {
-              ...prevState.panels['text'].data.textSettings,
-              ...structuredClone(partialTextSettings),
-            },
-          },
-        },
-      },
-    })),
-  setFabricCanvas: (fabricCanvas) => set({ fabricCanvas }),
+  setTextSettings: (partialTextSettings: PartialTextSettings) => {},
+  setFabricCanvas: (fabricCanvas) => {},
   fabricCanvas: null,
 }))

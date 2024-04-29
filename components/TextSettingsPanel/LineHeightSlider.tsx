@@ -11,15 +11,11 @@ export default function LineHeightSlider() {
     })
   )
 
-  const handleLineHeightChange = (lineHeightValue: [number]) => {
-    setTextSettings({
-      lineHeight: lineHeightValue[0],
-    })
-  }
+  // const handleLineHeightChange = (lineHeightValue: [number]) => {}
 
   return (
     <Slider
-      onValueChange={handleLineHeightChange}
+      // onValueChange={handleLineHeightChange}
       value={[textSettings.lineHeight ?? 1]}
       step={0.1}
       min={0.1}

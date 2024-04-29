@@ -11,16 +11,12 @@ export default function FontSizeSlider() {
     })
   )
 
-  const handleFontSizeChange = (fontSizeValue: [number]) => {
-    setTextSettings({
-      fontSize: fontSizeValue[0],
-    })
-  }
+  // const handleFontSizeChange = (fontSizeValue: [number]) => {}
 
   return (
     <Slider
       value={[textSettings.fontSize ?? 14]}
-      onValueChange={handleFontSizeChange}
+      // onValueChange={handleFontSizeChange}
       max={100}
       step={1}
       min={1}

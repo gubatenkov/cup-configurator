@@ -19,25 +19,6 @@ export default function Canvas2D() {
     isMounted,
   } = useFabricCanvas()
 
-  // Set default canvas background
-  useEffect(() => {
-    setCanvasBackgroundByUrl(
-      '/assets/backgrounds/default-cup-configuration.png'
-    )
-  }, [setCanvasBackgroundByUrl])
-
-  // Watch current path and lock the Text Panel when the user leaves it
-  useEffect(() => {
-    currentPathname === `/${textPanelPathname}`
-      ? unlockCanvasTextboxes()
-      : lockCanvasTextboxes()
-  }, [
-    unlockCanvasTextboxes,
-    lockCanvasTextboxes,
-    textPanelPathname,
-    currentPathname,
-  ])
-
   return (
     <>
       <div className="absolute left-4 top-4 z-50 flex items-center gap-2">
