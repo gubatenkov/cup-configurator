@@ -58,6 +58,8 @@ export default function TextSettingsPanel({ children }: Props) {
           underline,
           fontStyle,
           fontSize,
+          height,
+          width,
           text,
           fill,
         } = selection
@@ -71,6 +73,8 @@ export default function TextSettingsPanel({ children }: Props) {
           underline,
           fontStyle,
           fontSize,
+          height,
+          width,
           text,
           fill,
         })
